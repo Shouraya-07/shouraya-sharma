@@ -1,0 +1,854 @@
+/* =========================================================
+   SHOURAYA SHARMA · PORTFOLIO
+   macOS-style Design System
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ---------------------------------------------------------
+   CSS Custom Properties · Theme Tokens
+   --------------------------------------------------------- */
+:root,
+[data-theme='dark'] {
+  /* Backgrounds */
+  --bg-desktop: transparent;
+  --bg-menubar: rgba(20, 20, 28, 0.72);
+  --bg-dock: rgba(30, 30, 42, 0.55);
+  --bg-window: rgba(28, 28, 36, 0.88);
+  --bg-window-titlebar: rgba(38, 38, 50, 0.92);
+  --bg-sidebar: rgba(22, 22, 30, 0.80);
+  --bg-sidebar-active: rgba(80, 140, 255, 0.18);
+  --bg-card: rgba(40, 40, 55, 0.70);
+  --bg-card-hover: rgba(55, 55, 72, 0.80);
+  --bg-input: rgba(255, 255, 255, 0.06);
+  --bg-overlay: rgba(0, 0, 0, 0.55);
+  --bg-launchpad: rgba(0, 0, 0, 0.75);
+  --bg-tooltip: rgba(28, 28, 38, 0.95);
+
+  /* Text */
+  --text-primary: rgba(255, 255, 255, 0.92);
+  --text-secondary: rgba(255, 255, 255, 0.55);
+  --text-tertiary: rgba(255, 255, 255, 0.35);
+  --text-accent: #6fa3ff;
+  --text-menubar: rgba(255, 255, 255, 0.88);
+
+  /* Borders / Dividers */
+  --border-window: rgba(255, 255, 255, 0.10);
+  --border-sidebar: rgba(255, 255, 255, 0.07);
+  --border-input: rgba(255, 255, 255, 0.12);
+  --border-card: rgba(255, 255, 255, 0.08);
+  --divider: rgba(255, 255, 255, 0.08);
+
+  /* Accent */
+  --accent: #5b9bff;
+  --accent-hover: #6fa8ff;
+  --accent-subtle: rgba(91, 155, 255, 0.15);
+
+  /* Traffic lights */
+  --traffic-red: #ff5f57;
+  --traffic-yellow: #febc2e;
+  --traffic-green: #28c840;
+  --traffic-red-hover: #ff3b30;
+  --traffic-yellow-hover: #ffb800;
+  --traffic-green-hover: #00d200;
+
+  /* Glass / Blur */
+  --blur-menubar: blur(24px) saturate(160%);
+  --blur-dock: blur(28px) saturate(160%);
+  --blur-window: blur(32px) saturate(140%);
+  --blur-card: blur(16px);
+
+  /* Shadows */
+  --shadow-window: 0 32px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255,255,255,0.08);
+  --shadow-dock: 0 8px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.08);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --shadow-tooltip: 0 4px 16px rgba(0, 0, 0, 0.5);
+
+  /* Transitions */
+  --transition-fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-window: 12px;
+  --radius-dock: 20px;
+
+  /* Status colors */
+  --status-live: #30d158;
+  --status-indev: #febc2e;
+  --status-concept: #6fa3ff;
+
+  /* Scrollbar */
+  --scrollbar-thumb: rgba(255,255,255,0.18);
+  --scrollbar-track: transparent;
+}
+
+[data-theme='light'] {
+  --bg-desktop: transparent;
+  --bg-menubar: rgba(230, 230, 238, 0.75);
+  --bg-dock: rgba(240, 240, 248, 0.60);
+  --bg-window: rgba(245, 245, 250, 0.92);
+  --bg-window-titlebar: rgba(235, 235, 242, 0.96);
+  --bg-sidebar: rgba(228, 228, 236, 0.80);
+  --bg-sidebar-active: rgba(0, 100, 210, 0.12);
+  --bg-card: rgba(255, 255, 255, 0.75);
+  --bg-card-hover: rgba(255, 255, 255, 0.92);
+  --bg-input: rgba(0, 0, 0, 0.05);
+  --bg-overlay: rgba(0, 0, 0, 0.30);
+  --bg-launchpad: rgba(220, 220, 230, 0.80);
+  --bg-tooltip: rgba(50, 50, 60, 0.95);
+
+  --text-primary: rgba(20, 20, 28, 0.90);
+  --text-secondary: rgba(20, 20, 28, 0.55);
+  --text-tertiary: rgba(20, 20, 28, 0.35);
+  --text-accent: #0064d2;
+  --text-menubar: rgba(20, 20, 28, 0.88);
+
+  --border-window: rgba(0, 0, 0, 0.10);
+  --border-sidebar: rgba(0, 0, 0, 0.07);
+  --border-input: rgba(0, 0, 0, 0.12);
+  --border-card: rgba(0, 0, 0, 0.08);
+  --divider: rgba(0, 0, 0, 0.08);
+
+  --accent: #0064d2;
+  --accent-hover: #0070f0;
+  --accent-subtle: rgba(0, 100, 210, 0.12);
+
+  --shadow-window: 0 24px 60px rgba(0, 0, 0, 0.20), 0 0 0 1px rgba(0,0,0,0.08);
+  --shadow-dock: 0 6px 28px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0,0,0,0.07);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.10);
+  --shadow-tooltip: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+  --scrollbar-thumb: rgba(0,0,0,0.18);
+}
+
+/* ---------------------------------------------------------
+   Reset & Base
+   --------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  height: 100%;
+  overflow: hidden;
+  color: var(--text-primary);
+  transition: background var(--transition-slow), color var(--transition-slow);
+}
+
+/* Preserve line breaks entered by the administrator in public content. */
+main p,
+.window-content p,
+.mobile-app-content p {
+  white-space: pre-wrap;
+}
+
+.window-content article div,
+.mobile-app-content article div {
+  white-space: pre-wrap;
+}
+
+/* ---------------------------------------------------------
+   Custom Scrollbar
+   --------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 99px;
+}
+
+/* ---------------------------------------------------------
+   Desktop Shell
+   --------------------------------------------------------- */
+.desktop {
+  position: fixed;
+  inset: 0;
+  background-image: url('/wallpaper.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.desktop-windows-layer {
+  position: absolute;
+  inset: 0;
+  top: 30px; /* below menubar */
+  bottom: 78px; /* above dock */
+}
+
+/* ---------------------------------------------------------
+   Menu Bar
+   --------------------------------------------------------- */
+.menubar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  background: var(--bg-menubar);
+  backdrop-filter: var(--blur-menubar);
+  -webkit-backdrop-filter: var(--blur-menubar);
+  border-bottom: 1px solid var(--border-window);
+  z-index: 9000;
+  user-select: none;
+}
+
+.menubar-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.menubar-apple {
+  display: flex;
+  align-items: center;
+  cursor: default;
+  opacity: 0.9;
+  transition: opacity var(--transition-fast);
+  color: var(--text-menubar);
+}
+
+.menubar-apple:hover { opacity: 1; }
+
+.menubar-appname {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-menubar);
+  letter-spacing: -0.01em;
+}
+
+.menubar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.menubar-clock {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-menubar);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.menubar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 22px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  color: var(--text-menubar);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.menubar-btn:hover {
+  background: rgba(128, 128, 128, 0.18);
+}
+
+/* ---------------------------------------------------------
+   Dock
+   --------------------------------------------------------- */
+.dock-wrapper {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 8000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.dock {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--bg-dock);
+  backdrop-filter: var(--blur-dock);
+  -webkit-backdrop-filter: var(--blur-dock);
+  border-radius: var(--radius-dock);
+  border: 1px solid var(--border-window);
+  box-shadow: var(--shadow-dock);
+}
+
+.dock-separator {
+  width: 1px;
+  height: 36px;
+  background: var(--divider);
+  align-self: flex-end;
+  margin: 0 2px 6px;
+}
+
+/* DockIcon */
+.dock-icon-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dock-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-spring), filter var(--transition-fast);
+  position: relative;
+  overflow: visible;
+}
+
+.dock-icon:hover {
+  transform: translateY(-10px) scale(1.25);
+}
+
+.dock-icon-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.28);
+  background-image: linear-gradient(145deg, rgba(255,255,255,0.25), transparent 42%);
+}
+
+.dock-icon-inner::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.18);
+  pointer-events: none;
+}
+
+.dock-icon-inner::after {
+  content: '';
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  top: 5px;
+  height: 13px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+.dock-icon-inner svg {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35));
+  stroke-width: 1.8;
+}
+
+/* Magnify neighbors via CSS custom property trick */
+.dock-icon-wrapper:hover ~ .dock-icon-wrapper .dock-icon {
+  transform: translateY(-4px) scale(1.10);
+}
+
+.dock-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-primary);
+  opacity: 0.7;
+  margin-top: 3px;
+}
+
+.dock-tooltip {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-tooltip);
+  color: var(--text-primary);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: var(--shadow-tooltip);
+  border: 1px solid var(--border-window);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  z-index: 100;
+}
+
+.dock-icon-wrapper:hover .dock-tooltip {
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------
+   Window
+   --------------------------------------------------------- */
+.window {
+  position: absolute;
+  background: var(--bg-window);
+  backdrop-filter: var(--blur-window);
+  -webkit-backdrop-filter: var(--blur-window);
+  border-radius: var(--radius-window);
+  border: 1px solid var(--border-window);
+  box-shadow: var(--shadow-window);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  will-change: transform;
+  transition: box-shadow var(--transition-fast);
+}
+
+.window.is-maximized {
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 0 !important;
+}
+
+.window.is-minimized {
+  display: none;
+}
+
+/* Open animation */
+@keyframes windowOpen {
+  from {
+    opacity: 0;
+    transform: scale(0.90);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.window-opening {
+  animation: windowOpen 220ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.window-titlebar {
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--bg-window-titlebar);
+  border-bottom: 1px solid var(--border-window);
+  cursor: grab;
+  user-select: none;
+}
+
+.window-titlebar:active {
+  cursor: grabbing;
+}
+
+.window-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: -0.01em;
+  pointer-events: none;
+}
+
+.traffic-lights {
+  position: absolute;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.traffic-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter var(--transition-fast), transform var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.traffic-light:hover {
+  filter: brightness(1.15);
+  transform: scale(1.1);
+}
+
+.traffic-light.red   { background: var(--traffic-red); }
+.traffic-light.yellow { background: var(--traffic-yellow); }
+.traffic-light.green  { background: var(--traffic-green); }
+
+.traffic-light-icon {
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  font-size: 8px;
+  line-height: 1;
+  color: rgba(0,0,0,0.5);
+  font-weight: 700;
+}
+
+.traffic-lights:hover .traffic-light-icon {
+  opacity: 1;
+}
+
+.window-content {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+}
+
+/* Resize handles */
+.resize-handle {
+  position: absolute;
+  z-index: 10;
+}
+
+.resize-handle.right  { top: 4px; right: -3px; bottom: 4px; width: 6px; cursor: ew-resize; }
+.resize-handle.bottom { left: 4px; right: 4px; bottom: -3px; height: 6px; cursor: ns-resize; }
+.resize-handle.corner { right: -3px; bottom: -3px; width: 14px; height: 14px; cursor: nwse-resize; }
+
+/* ---------------------------------------------------------
+   App Icon Gradients (for dock)
+   --------------------------------------------------------- */
+.app-icon-settings     { background: linear-gradient(145deg, #636366, #3a3a3c); }
+.app-icon-files        { background: linear-gradient(145deg, #4db8ff, #007aff); }
+.app-icon-calendar     { background: linear-gradient(145deg, #ff5f57, #ff375f); }
+.app-icon-notes        { background: linear-gradient(145deg, #ffd426, #ffb500); }
+.app-icon-activity     { background: linear-gradient(145deg, #66d4cf, #30b0c7); }
+.app-icon-launchpad    { background: linear-gradient(145deg, #9b6dff, #7040ff); }
+.app-icon-admin        { background: linear-gradient(145deg, #2d2d35, #1c1c24); }
+
+.mobile-app-icon {
+  border: 1px solid rgba(255,255,255,0.28);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.24), 0 8px 18px rgba(0,0,0,0.2);
+}
+
+/* ---------------------------------------------------------
+   Launchpad Overlay
+   --------------------------------------------------------- */
+.launchpad-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-launchpad);
+  backdrop-filter: blur(40px) saturate(120%);
+  -webkit-backdrop-filter: blur(40px) saturate(120%);
+  z-index: 7000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+}
+
+@keyframes launchpadOpen {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.launchpad-overlay {
+  animation: launchpadOpen 220ms ease forwards;
+}
+
+.launchpad-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px 48px;
+  padding: 0 60px;
+}
+
+.launchpad-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform var(--transition-spring);
+}
+
+.launchpad-item:hover {
+  transform: scale(1.08);
+}
+
+.launchpad-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  font-size: 36px;
+  transition: transform var(--transition-spring), box-shadow var(--transition-fast);
+}
+
+.launchpad-item:hover .launchpad-icon {
+  box-shadow: 0 10px 32px rgba(0,0,0,0.5);
+}
+
+.launchpad-label {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: white;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  text-align: center;
+}
+
+.launchpad-close-hint {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  margin-top: 12px;
+}
+
+/* ---------------------------------------------------------
+   Mobile Layout (< 768px)
+   --------------------------------------------------------- */
+.mobile-layout {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .desktop-shell {
+    display: none;
+  }
+
+  .mobile-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    background-image: url('/wallpaper.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+
+  .mobile-topbar {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: var(--bg-menubar);
+    backdrop-filter: var(--blur-menubar);
+    -webkit-backdrop-filter: var(--blur-menubar);
+    border-bottom: 1px solid var(--border-window);
+    color: var(--text-menubar);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .mobile-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px 20px;
+    padding: 40px 20px;
+    align-content: start;
+  }
+
+  .mobile-app-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+
+  .mobile-app-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  }
+
+  .mobile-app-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: white;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+    text-align: center;
+  }
+
+  .mobile-app-view {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-window);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+  }
+
+  @keyframes slideInUp {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+
+  .mobile-app-view {
+    animation: slideInUp 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .mobile-app-header {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    background: var(--bg-window-titlebar);
+    border-bottom: 1px solid var(--border-window);
+    gap: 12px;
+  }
+
+  .mobile-back-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast);
+  }
+
+  .mobile-back-btn:hover {
+    background: var(--accent-subtle);
+  }
+
+  .mobile-app-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .mobile-app-content {
+    flex: 1;
+    overflow-y: auto;
+  }
+}
+
+/* ---------------------------------------------------------
+   Utility helpers
+   --------------------------------------------------------- */
+.glass {
+  background: var(--bg-card);
+  backdrop-filter: var(--blur-card);
+  -webkit-backdrop-filter: var(--blur-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--accent-subtle);
+  color: var(--text-accent);
+  border: 1px solid rgba(91,155,255,0.20);
+}
+
+.badge-live    { background: rgba(48,209,88,0.15); color: var(--status-live); border-color: rgba(48,209,88,0.25); }
+.badge-indev   { background: rgba(254,188,46,0.15); color: var(--status-indev); border-color: rgba(254,188,46,0.25); }
+.badge-concept { background: rgba(111,163,255,0.15); color: var(--status-concept); border-color: rgba(111,163,255,0.25); }
+
+.status-badge { display:inline-flex; align-items:center; padding:4px 10px; border-radius:999px; font-size:11px; font-weight:700; border:1px solid; }
+.status-live { background:#30d158; color:#08230f; border-color:#30d158; }
+.status-in-dev { background:#febc2e; color:#352400; border-color:#febc2e; }
+.status-concept { background:#fff; color:#333; border-color:#d7d7d7; }
+
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border-sidebar);
+  overflow-y: auto;
+  padding: 12px 8px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: background var(--transition-fast), color var(--transition-fast);
+  user-select: none;
+}
+
+.sidebar-item:hover {
+  background: rgba(128,128,128,0.12);
+  color: var(--text-primary);
+}
+
+.sidebar-item.active {
+  background: var(--bg-sidebar-active);
+  color: var(--text-accent);
+}
+
+.sidebar-section-title {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 8px 10px 4px;
+  margin-top: 4px;
+}
+
+/* ---------------------------------------------------------
+   Selection highlight
+   --------------------------------------------------------- */
+::selection {
+  background: rgba(91, 155, 255, 0.30);
+  color: inherit;
+}
