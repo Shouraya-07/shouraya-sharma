@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Search } from 'lucide-react';
+import { BuildLogLogo } from '@/components/icons/AppLogos';
 import type { Note } from '@/lib/types';
 
 function formatDate(d: string) {
@@ -44,7 +45,10 @@ export default function NotesApp({ notes }: { notes: Note[] }) {
     <div style={{ display:'flex', height:'100%' }}>
       {/* Sidebar */}
       <aside style={{ width:220, flexShrink:0, background:'var(--bg-sidebar)', borderRight:'1px solid var(--border-sidebar)', display:'flex', flexDirection:'column' }}>
-        <div style={{ padding:'10px 10px 6px' }}>
+        <p className="sidebar-section-title" style={{ display:'flex', alignItems:'center', gap:6, padding:'14px 14px 6px' }}>
+          <BuildLogLogo size={14} /> Build Log
+        </p>
+        <div style={{ padding:'4px 10px 8px' }}>
           <div style={{ display:'flex', alignItems:'center', gap:6, background:'var(--bg-input)', border:'1px solid var(--border-input)', borderRadius:'var(--radius-sm)', padding:'5px 10px' }}>
             <Search size={12} style={{ color:'var(--text-tertiary)', flexShrink:0 }}/>
             <input id="notes-search" placeholder="Search notes..." value={search} onChange={e=>setSearch(e.target.value)}

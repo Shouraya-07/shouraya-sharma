@@ -1,16 +1,23 @@
 'use client';
 
 import React from 'react';
-import { Activity, CalendarDays, Folder, Grid3X3, Settings, StickyNote } from 'lucide-react';
 import { useWindowManager, type AppId } from '@/contexts/WindowManagerContext';
+import { 
+  AboutMeLogo, 
+  ProjectsLogo, 
+  ExperienceLogo, 
+  BuildLogLogo, 
+  SkillsLogo, 
+  LaunchpadLogo 
+} from '@/components/icons/AppLogos';
 
 const APPS: { id: AppId; label: string; icon: React.ReactNode; color: string }[] = [
-  { id: 'settings', label: 'About Me', icon: <Settings size={25} />, color: 'app-icon-settings' },
-  { id: 'files', label: 'Projects', icon: <Folder size={25} />, color: 'app-icon-files' },
-  { id: 'calendar', label: 'Experience', icon: <CalendarDays size={25} />, color: 'app-icon-calendar' },
-  { id: 'notes', label: 'Build Log', icon: <StickyNote size={25} />, color: 'app-icon-notes' },
-  { id: 'activity-monitor', label: 'Skills', icon: <Activity size={25} />, color: 'app-icon-activity' },
-  { id: 'launchpad', label: 'All Apps', icon: <Grid3X3 size={25} />, color: 'app-icon-launchpad' },
+  { id: 'settings', label: 'About Me', icon: <AboutMeLogo size={30} />, color: 'app-icon-settings' },
+  { id: 'files', label: 'Projects', icon: <ProjectsLogo size={30} />, color: 'app-icon-files' },
+  { id: 'calendar', label: 'Experience', icon: <ExperienceLogo size={30} />, color: 'app-icon-calendar' },
+  { id: 'notes', label: 'Build Log', icon: <BuildLogLogo size={30} />, color: 'app-icon-notes' },
+  { id: 'activity-monitor', label: 'Skills', icon: <SkillsLogo size={30} />, color: 'app-icon-activity' },
+  { id: 'launchpad', label: 'All Apps', icon: <LaunchpadLogo size={30} />, color: 'app-icon-launchpad' },
 ];
 
 export default function Dock() {

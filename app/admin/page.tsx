@@ -1,9 +1,16 @@
 import React from 'react';
+import { redirect } from 'next/navigation';
 import { fetchPortfolioData } from '@/lib/data';
 import AdminDashboard from '@/components/admin/AdminDashboard';
 import { logoutAction } from './actions';
+import { requireAdminUser } from '@/lib/admin-access';
 
 export default async function AdminPage() {
+  try {
+    await requireAdminUser();
+  } catch {
+    redirect('/admin/login');
+  }
   const data = await fetchPortfolioData();
 
   return (

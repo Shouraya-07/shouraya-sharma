@@ -1,24 +1,32 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Settings, Folder, Calendar, StickyNote, Activity, Grid3x3, ChevronLeft } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import SettingsApp from '@/components/apps/SettingsApp';
 import FilesApp from '@/components/apps/FilesApp';
 import CalendarApp from '@/components/apps/CalendarApp';
 import NotesApp from '@/components/apps/NotesApp';
 import ActivityMonitorApp from '@/components/apps/ActivityMonitorApp';
 import Launchpad from '@/components/apps/Launchpad';
+import { 
+  AboutMeLogo, 
+  ProjectsLogo, 
+  ExperienceLogo, 
+  BuildLogLogo, 
+  SkillsLogo, 
+  LaunchpadLogo 
+} from '@/components/icons/AppLogos';
 import type { PortfolioData } from '@/lib/types';
 
 type AppId = 'settings'|'files'|'calendar'|'notes'|'activity-monitor'|'launchpad';
 
 const MOBILE_APPS = [
-  { id: 'settings'          as AppId, label:'About Me',   icon:<Settings size={30} strokeWidth={1.8} color="white"/>,    colorClass:'app-icon-settings' },
-  { id: 'files'             as AppId, label:'Projects',   icon:<Folder size={30} strokeWidth={1.8} color="white"/>,      colorClass:'app-icon-files' },
-  { id: 'calendar'          as AppId, label:'Experience', icon:<Calendar size={30} strokeWidth={1.8} color="white"/>,    colorClass:'app-icon-calendar' },
-  { id: 'notes'             as AppId, label:'Build Log',  icon:<StickyNote size={30} strokeWidth={1.8} color="white"/>, colorClass:'app-icon-notes' },
-  { id: 'activity-monitor'  as AppId, label:'Skills',     icon:<Activity size={30} strokeWidth={1.8} color="white"/>,   colorClass:'app-icon-activity' },
-  { id: 'launchpad'         as AppId, label:'Social',     icon:<Grid3x3 size={30} strokeWidth={1.8} color="white"/>,    colorClass:'app-icon-launchpad' },
+  { id: 'settings'          as AppId, label:'About Me',   icon:<AboutMeLogo size={38} />,    colorClass:'app-icon-settings' },
+  { id: 'files'             as AppId, label:'Projects',   icon:<ProjectsLogo size={38} />,      colorClass:'app-icon-files' },
+  { id: 'calendar'          as AppId, label:'Experience', icon:<ExperienceLogo size={38} />,    colorClass:'app-icon-calendar' },
+  { id: 'notes'             as AppId, label:'Build Log',  icon:<BuildLogLogo size={38} />, colorClass:'app-icon-notes' },
+  { id: 'activity-monitor'  as AppId, label:'Skills',     icon:<SkillsLogo size={38} />,   colorClass:'app-icon-activity' },
+  { id: 'launchpad'         as AppId, label:'Social',     icon:<LaunchpadLogo size={38} />,    colorClass:'app-icon-launchpad' },
 ];
 
 const APP_TITLES: Record<AppId, string> = {

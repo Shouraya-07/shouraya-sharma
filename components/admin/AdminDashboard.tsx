@@ -115,9 +115,16 @@ function ProfileForm({ profile }: { profile: PortfolioData['profile'] }) {
 // ==========================================
 // PROJECTS MANAGER
 // ==========================================
+const PROJECT_SECTIONS: { key: string; label: string }[] = [
+  { key: 'personal',     label: 'Personal Projects' },
+  { key: 'professional', label: 'Professional Projects' },
+  { key: 'team',         label: 'Team Projects' },
+];
+
 function ProjectsManager({ projects }: { projects: Project[] }) {
   const [editingId, setEditingId] = useState<string | 'new' | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
 
   const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -137,6 +144,9 @@ function ProjectsManager({ projects }: { projects: Project[] }) {
 
   const editingItem = editingId === 'new' ? null : projects.find(p => p.id === editingId);
 
+  const toggleSection = (key: string) =>
+    setCollapsed(prev => ({ ...prev, [key]: !prev[key] }));
+
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 20 }}>
@@ -146,37 +156,54 @@ function ProjectsManager({ projects }: { projects: Project[] }) {
 
       {editingId && (
         <div style={{ background: 'var(--bg-card)', padding: 20, borderRadius: 8, marginBottom: 20, border: '1px solid var(--border-card)' }}>
+          <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 14, color: 'var(--text-secondary)' }}>
+            {editingItem ? `Editing: ${editingItem.title}` : 'New Project'}
+          </h3>
           <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <input type="hidden" name="id" value={editingItem?.id || ''} />
-            
-            <div style={{ display: 'flex', gap: 12 }}>
-              <label style={{ ...labelStyle, flex: 1 }}>Title <input name="title" defaultValue={editingItem?.title} style={inputStyle} required/></label>
-            </div>
-            
-            <label style={labelStyle}>Problem <input name="problem" defaultValue={editingItem?.problem} style={inputStyle} required/></label>
-            <label style={labelStyle}>Outcome <input name="outcome" defaultValue={editingItem?.outcome} style={inputStyle} required/></label>
-            
+
+            <label style={{ ...labelStyle, flex: 1 }}>Title <input name="title" defaultValue={editingItem?.title} style={inputStyle} required /></label>
+
+            <label style={labelStyle}>
+              Problem
+              <span style={{ fontWeight: 400, color: 'var(--text-tertiary)', marginLeft: 6 }}>(optional)</span>
+              <input name="problem" defaultValue={editingItem?.problem} style={inputStyle} />
+            </label>
+
+            <label style={labelStyle}>
+              Outcome
+              <span style={{ fontWeight: 400, color: 'var(--text-tertiary)', marginLeft: 6 }}>(optional)</span>
+              <input name="outcome" defaultValue={editingItem?.outcome} style={inputStyle} />
+            </label>
+
             <div style={{ display: 'flex', gap: 12 }}>
               <label style={{ ...labelStyle, flex: 1 }}>Section
                 <select name="category" defaultValue={editingItem?.category || 'personal'} style={inputStyle}>
-                  <option value="personal">Personal Projects</option>
-                  <option value="professional">Professional Projects</option>
-                  <option value="team">Team Projects</option>
+                  {PROJECT_SECTIONS.map(s => <option key={s.key} value={s.key}>{s.label}</option>)}
                 </select>
               </label>
-              <label style={{ ...labelStyle, flex: 1 }}>Status 
+              <label style={{ ...labelStyle, flex: 1 }}>Status
                 <select name="status" defaultValue={editingItem?.status || 'In Dev'} style={inputStyle}>
                   <option value="Live">Live</option>
                   <option value="In Dev">In Dev</option>
                   <option value="Concept">Concept</option>
                 </select>
               </label>
-              <label style={{ ...labelStyle, flex: 1 }}>Display Order <input type="number" name="display_order" defaultValue={editingItem?.display_order || 0} style={inputStyle} required/></label>
+              <label style={{ ...labelStyle, flex: 1 }}>Display Order
+                <input type="number" name="display_order" defaultValue={editingItem?.display_order ?? 0} style={inputStyle} required />
+              </label>
             </div>
-            
-            <label style={labelStyle}>Tech Stack (comma separated) <input name="tech_stack" defaultValue={editingItem?.tech_stack.join(', ')} style={inputStyle} required/></label>
-            <label style={labelStyle}>Links (one URL per line) <textarea name="links" defaultValue={(editingItem?.links || (editingItem?.link ? [editingItem.link] : [])).join('\n')} style={{ ...inputStyle, minHeight:70 }}/></label>
-            
+
+            <label style={labelStyle}>
+              Tech Stack (comma separated)
+              <span style={{ fontWeight: 400, color: 'var(--text-tertiary)', marginLeft: 6 }}>(optional)</span>
+              <input name="tech_stack" defaultValue={editingItem?.tech_stack?.join(', ')} style={inputStyle} />
+            </label>
+
+            <label style={labelStyle}>Links (one URL per line)
+              <textarea name="links" defaultValue={(editingItem?.links || (editingItem?.link ? [editingItem.link] : [])).join('\n')} style={{ ...inputStyle, minHeight: 70 }} />
+            </label>
+
             <div style={{ display: 'flex', gap: 10, marginTop: 10 }}>
               <button type="submit" disabled={isPending} style={btnStyle}>Save</button>
               <button type="button" onClick={() => setEditingId(null)} style={{ ...btnStyle, background: 'var(--bg-input)' }}>Cancel</button>
@@ -185,19 +212,73 @@ function ProjectsManager({ projects }: { projects: Project[] }) {
         </div>
       )}
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {projects.map(p => (
-          <div key={p.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', background: 'var(--bg-card)', borderRadius: 8, border: '1px solid var(--border-card)' }}>
-            <div>
-              <strong>{p.title}</strong>
-              <span style={{ fontSize: 11, marginLeft: 10, color: 'var(--text-tertiary)' }}>Order: {p.display_order}</span>
+      {/* Grouped by section */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+        {PROJECT_SECTIONS.map(section => {
+          const sectionProjects = projects
+            .filter(p => (p.category || 'personal') === section.key)
+            .sort((a, b) => (a.display_order ?? 0) - (b.display_order ?? 0));
+          const isCollapsed = collapsed[section.key];
+
+          return (
+            <div key={section.key}>
+              {/* Section Header */}
+              <div
+                onClick={() => toggleSection(section.key)}
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                  padding: '8px 12px',
+                  background: 'var(--bg-titlebar, var(--bg-card))',
+                  borderRadius: 6,
+                  border: '1px solid var(--border-card)',
+                  cursor: 'pointer',
+                  userSelect: 'none',
+                  marginBottom: isCollapsed ? 0 : 8,
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)' }}>
+                    {section.label}
+                  </span>
+                  <span style={{
+                    fontSize: 11, padding: '1px 7px', borderRadius: 99,
+                    background: 'var(--accent)', color: '#fff', fontWeight: 600
+                  }}>
+                    {sectionProjects.length}
+                  </span>
+                </div>
+                <span style={{ fontSize: 11, color: 'var(--text-tertiary)' }}>{isCollapsed ? '▶ expand' : '▼ collapse'}</span>
+              </div>
+
+              {!isCollapsed && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  {sectionProjects.length === 0 ? (
+                    <div style={{ fontSize: 12, color: 'var(--text-tertiary)', padding: '10px 14px' }}>No projects in this section.</div>
+                  ) : (
+                    sectionProjects.map(p => (
+                      <div key={p.id} style={{
+                        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                        padding: '10px 16px', background: 'var(--bg-card)', borderRadius: 7,
+                        border: '1px solid var(--border-card)'
+                      }}>
+                        <div>
+                          <strong style={{ fontSize: 13 }}>{p.title}</strong>
+                          <span style={{ fontSize: 11, marginLeft: 10, color: 'var(--text-tertiary)' }}>
+                            Order: {p.display_order} · {p.status}
+                          </span>
+                        </div>
+                        <div style={{ display: 'flex', gap: 8 }}>
+                          <button onClick={() => setEditingId(p.id)} style={iconBtnStyle}><Edit2 size={14} /></button>
+                          <button onClick={() => handleDelete(p.id)} style={{ ...iconBtnStyle, color: '#ff5f57' }}><Trash2 size={14} /></button>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              )}
             </div>
-            <div style={{ display: 'flex', gap: 8 }}>
-              <button onClick={() => setEditingId(p.id)} style={iconBtnStyle}><Edit2 size={14} /></button>
-              <button onClick={() => handleDelete(p.id)} style={{ ...iconBtnStyle, color: '#ff5f57' }}><Trash2 size={14} /></button>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
