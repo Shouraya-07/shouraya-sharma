@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shouraya Sharma's static portfolio
 
-## Getting Started
+The portfolio is a Next.js static export. Its public UI, icons, animations, and app layouts are unchanged. All portfolio content lives in `lib/data.ts`, transcribed from the supplied résumé. No database, authentication service, API, or environment variables are required.
 
-First, run the development server:
+## Develop and preview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- `npm install`
+- `npm run dev` starts the development preview.
+- `npm run build` generates the deployable static site in `out/`.
+- `npm start` serves `out/` locally after a build. Set `PORT` to use a different port.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Deploy the contents of `out/` to a static host. The local preview script is a development convenience, not an application backend.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Update content
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Edit `lib/data.ts`, then rebuild and redeploy. The old Supabase admin dashboard, authentication callback, middleware, and database clients have been removed. Existing local `.env` files are unused and have not been modified.
 
-## Learn More
+Content mapping:
 
-To learn more about Next.js, take a look at the following resources:
+- About Me contains the résumé summary, degree, location, spoken languages, and contact links.
+- Projects contains the current project list, with descriptions and technology tags drawn from the supplied project repositories where available.
+- Experience contains the listed roles, including the Webmaster term through October 2026 and the current Executive Secretary role.
+- Skills contains all eight technical skill groups from the résumé.
+- Notes contains résumé-based education and current-work summaries, rather than invented journal entries. Note dates indicate the content snapshot, not original publication dates.
+- Project categories organize work into personal, professional, and chapter/team work. OpsPilot AI is conservatively marked In Dev because the résumé does not confirm a live deployment; Shunt and Jugni are explicitly ongoing.
+- Month-only experience dates use the first day internally; the existing UI displays only month and year.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The current Projects Finder has three built-in folders: Personal, Professional, and Team. To keep the frontend unchanged, Shivoham Labs projects are listed under Personal, while freelance work is listed under Professional. Freelance entries intentionally show only their names and live website links.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The source résumé itself is not copied into public assets.

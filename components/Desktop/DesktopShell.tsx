@@ -18,7 +18,7 @@ export default function DesktopShell({ data }: { data: PortfolioData }) {
   return (
     <div className="desktop-shell">
       <div className="desktop">
-        <MenuBar />
+        <MenuBar activeAppName={data.profile.name} /><section className="desktop-welcome"><h1>Ideas. Code.<br/><em>A little curiosity.</em></h1><p>{data.profile.title}</p></section>
         <div className="desktop-windows-layer">
           <Window id="settings"><SettingsApp profile={data.profile} /></Window>
           <Window id="files"><FilesApp projects={data.projects} /></Window>
@@ -32,3 +32,4 @@ export default function DesktopShell({ data }: { data: PortfolioData }) {
     </div>
   );
 }
+

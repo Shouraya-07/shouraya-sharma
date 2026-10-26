@@ -48,7 +48,7 @@ export default function MenuBar({ activeAppName }: { activeAppName?: string }) {
         <span className="menubar-apple" aria-label="Shivoham Labs">
           <Image src="/logo.png" alt="Shivoham Labs" width={18} height={18} style={{ objectFit: 'contain' }} priority />
         </span>
-        <span className="menubar-appname">{activeAppName ?? 'Shouraya Sharma'}</span>
+        <span data-name-anchor className="menubar-appname">{activeAppName ?? 'Shouraya Sharma'}</span>
       </div>
 
       <div className="menubar-right">
@@ -69,3 +69,4 @@ export default function MenuBar({ activeAppName }: { activeAppName?: string }) {
     </header>
   );
 }
+

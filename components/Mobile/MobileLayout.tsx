@@ -34,7 +34,7 @@ const APP_TITLES: Record<AppId, string> = {
   files:             'Finder : Projects',
   calendar:          'Experience Timeline',
   notes:             'Notes : Build Log',
-  'activity-monitor':'Activity Monitor',
+  'activity-monitor':'System Information : Skills',
   launchpad:         'Launchpad',
 };
 
@@ -55,7 +55,7 @@ export default function MobileLayout({ data }: { data: PortfolioData }) {
   return (
     <div className="mobile-layout">
       <div className="mobile-topbar">
-        <span>Shouraya Sharma</span>
+        <span data-name-anchor>{data.profile.name}</span>
         <span style={{ fontSize:13, fontWeight:400, color:'var(--text-secondary)' }}>
           {new Date().toLocaleTimeString('en-US',{ hour:'numeric', minute:'2-digit' })}
         </span>
@@ -85,3 +85,4 @@ export default function MobileLayout({ data }: { data: PortfolioData }) {
     </div>
   );
 }
+

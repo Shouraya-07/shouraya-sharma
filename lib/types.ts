@@ -6,11 +6,19 @@ export interface Profile {
   photo_url: string | null;
   languages: string[];
   institute: string;
+  education: Education[];
   location: string;
   locations: string[];
   links: { label: string; url: string }[];
   created_at: string;
   updated_at: string;
+}
+
+export interface Education {
+  institution: string;
+  qualification: string;
+  period: string;
+  result?: string;
 }
 
 export interface Project {

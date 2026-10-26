@@ -88,7 +88,7 @@ const DEFAULT_WINDOWS: Record<AppId, Omit<WindowState, 'zIndex'>> = {
   },
   'activity-monitor': {
     id: 'activity-monitor',
-    title: 'Activity Monitor : Skills',
+    title: 'System Information : Skills',
     isOpen: false,
     isMinimized: false,
     isMaximized: false,
@@ -144,6 +144,10 @@ export function WindowManagerProvider({ children }: { children: React.ReactNode 
       ...prev,
       [id]: {
         ...prev[id],
+        width: Math.min(prev[id].width, window.innerWidth - 40),
+        height: Math.min(prev[id].height, window.innerHeight - 150),
+        x: Math.max(20, Math.min(prev[id].x, window.innerWidth - Math.min(prev[id].width, window.innerWidth - 40) - 20)),
+        y: Math.max(15, Math.min(prev[id].y, window.innerHeight - Math.min(prev[id].height, window.innerHeight - 150) - 125)),
         isOpen: true,
         isMinimized: false,
         zIndex: nextZ(),
@@ -209,3 +213,4 @@ export function WindowManagerProvider({ children }: { children: React.ReactNode 
 export function useWindowManager() {
   return useContext(WindowManagerContext);
 }
+
