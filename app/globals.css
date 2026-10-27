@@ -837,6 +837,7 @@ main p,
 .status-live { background:#30d158; color:#08230f; border-color:#30d158; }
 .status-in-dev { background:#febc2e; color:#352400; border-color:#febc2e; }
 .status-concept { background:#fff; color:#333; border-color:#d7d7d7; }
+.status-ideation { background:#d8b4fe; color:#32104f; border-color:#c084fc; }
 
 .sidebar {
   width: 220px;

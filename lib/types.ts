@@ -28,7 +28,7 @@ export interface Project {
   emoji: string;
   problem: string;
   tech_stack: string[];
-  status: 'Live' | 'In Dev' | 'Concept';
+  status: 'Live' | 'In Dev' | 'Concept' | 'Ideation';
   outcome: string;
   link: string | null;
   links: string[];

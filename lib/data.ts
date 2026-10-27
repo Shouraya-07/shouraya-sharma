@@ -6,14 +6,14 @@ const snapshot = '2026-10-26T00:00:00Z';
 const timestamps = { created_at: snapshot, updated_at: snapshot };
 
 const skillGroups: Record<string, string[]> = {
-  'Programming Languages': ['C', 'C++', 'Python', 'Go'],
+  'Programming Languages': ['C', 'C++', 'Python'],
   'Cybersecurity Tools': ['Nmap', 'Wireshark', 'Burp Suite', 'Autopsy', 'Kali Linux', 'Parrot OS'],
   Frontend: ['HTML5', 'CSS3', 'Tailwind CSS', 'JavaScript', 'React.js', 'Vite'],
   Backend: ['FastAPI', 'REST APIs', 'MCP (Model Context Protocol)'],
-  Databases: ['Oracle SQL', 'PostgreSQL', 'Firebase', 'DBMS'],
+  Databases: ['Oracle SQL', 'PostgreSQL', 'Firebase'],
   'DevOps & Tools': ['Git', 'GitHub', 'Vercel', 'Cloudflare Workers', 'Cloudinary', 'Network Tunneling'],
   'Architecture & Practices': ['Systems Design', 'Full-Stack Development', 'Project Management'],
-  Concepts: ['C++ STL', 'Data Structures and Algorithms (DSA)', 'Object-Oriented Programming (OOPS)'],
+  Concepts: ['C++ STL', 'Data Structures and Algorithms (DSA)', 'Object-Oriented Programming (OOPS)', 'DBMS'],
 };
 
 const projectEntries: Omit<Project, 'emoji' | 'link' | 'display_order' | 'created_at' | 'updated_at'>[] = [
@@ -23,6 +23,12 @@ const projectEntries: Omit<Project, 'emoji' | 'link' | 'display_order' | 'create
     problem: 'Local AI inference on Snapdragon PCs needs clear model routing and useful telemetry.',
     outcome: 'A runnable Ollama-compatible gateway prototype for Snapdragon PCs, with model resolution, explainable routing, telemetry, and safe pre-token fallback.',
     tech_stack: ['JavaScript', 'Ollama API', 'Qualcomm GenieX'], links: ['https://github.com/Shouraya-07/SnapRoute'],
+  },
+  {
+    id: 'kavach', title: 'Kavach', category: 'personal', status: 'Ideation',
+    problem: 'Securely manage paired Windows PCs from an Android phone.',
+    outcome: 'Kavach Key uses encrypted, signed commands over a cloud relay, with Bluetooth support planned for nearby control. Biometric confirmation and local audit logs help protect sensitive actions; Windows unlock requires a separate Credential Provider integration.',
+    tech_stack: [], links: [],
   },
   // Shivoham Labs (kept in the existing Personal Finder folder to preserve the UI).
   {
@@ -150,7 +156,7 @@ export const portfolioData: PortfolioData = {
     },
     {
       ...timestamps, id: 'shivoham-founder', org: 'Shivoham Lab', role: 'Founder and Builder',
-      emoji: '', logo_url: null, color: '#69ad9e', start_date: '2025-02-01', end_date: null, display_order: 4,
+      emoji: '', logo_url: null, color: '#69ad9e', start_date: '2026-06-01', end_date: null, display_order: 4,
       description: 'Running an independent lab for building systems, AI tools, and experimental software. Shipping tools and research projects under the Shivoham Lab umbrella.',
     },
   ],
